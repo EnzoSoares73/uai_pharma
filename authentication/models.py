@@ -42,6 +42,6 @@ class User(AbstractUser):
 class Endereco(models.Model):
     rua = models.CharField('Rua', validators=[regexAlfabetico], max_length=50)
     bairro = models.CharField('Bairro', validators=[regexAlfabetico], max_length=50)
-    numero = models.IntegerField('Numero')
+    numero = models.IntegerField('Número')
     complemento = models.CharField('Complemento', max_length=50)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
