@@ -22,6 +22,24 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
+import os
+from pip._internal.utils import logging
+
+newDict = {}
+logger = logging.getLogger(__name__)
+env_name = '.env'
+
+try:
+    f = open(env_name, 'r')
+    for line in f:
+        listedline = line.strip().split('=')
+        if len(listedline) > 1:
+            newDict[listedline[0]] = listedline[1]
+except FileNotFoundError:
+    logger.error("Falha na abertura do arquivo " + env_name)
+finally:
+    os.environ.update(newDict)
+
 SECRET_KEY = os.environ.get("SECRET_KEY")
 
 DEBUG = int(os.environ.get("DEBUG", default=0))
@@ -140,7 +158,7 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-#AUTH_USER_MODEL = 'authentication.User'
+AUTH_USER_MODEL = 'authentication.User'
 
 # Base url to serve media files
 MEDIA_URL = '/media/'
