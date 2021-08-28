@@ -26,7 +26,7 @@ class regexAlfabetico(validators.RegexValidator):
 class User(AbstractUser):
     first_name = models.CharField('Primeiro nome', validators=[UnicodeUsernameValidator], max_length=150) #mask
     last_name = models.CharField('Sobrenome', max_length=150, validators=[UnicodeUsernameValidator]) #mask
-    username = 0 #mask
+    username = None #mask
     email = models.EmailField(('Email'), blank=True, unique=True)
     telefone = models.CharField('Número de Telefone', validators=[regexTelefone], max_length=10)
 

@@ -16,13 +16,13 @@ class Tag(models.Model):
         return self.nome
 
 class Produto(models.Model):
-    nome = models.CharField("Nome", max_length=50)
-    descricao = models.CharField("Descrição", max_length=200)
+    nome = models.CharField("Nome", max_length=100)
+    descricao = models.CharField("Descrição", max_length=500)
     preco = models.FloatField("Preço")
     promocao = models.IntegerField("Valor da promoção (%)", validators=[validators.validate_range])
-    tags = models.ManyToManyField(Tag)
     em_estoque = models.BooleanField("Em estoque?")
     ativado = models.BooleanField("Ativado?")
+    tags = models.ManyToManyField(Tag)
 
     def __str__(self):
         return self.nome
@@ -35,3 +35,10 @@ class Item_carrinho(models.Model):
     produto = models.OneToOneField(Produto, on_delete=models.PROTECT)
     carrinho = models.ForeignKey(Carrinho, on_delete=models.CASCADE)
     quantidade = models.IntegerField()
+
+class Imagem(models.Model):
+    produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
+    imagem = models.ImageField("Imagem")
+
+    def __str__(self):
+        return self.imagem.name
