@@ -89,9 +89,9 @@ TEMPLATES = [
     },
 ]
 
-LOGIN_REDIRECT_URL = "authentication:dashboard"
+LOGIN_REDIRECT_URL = "dashboard"
 
-LOGOUT_REDIRECT_URL = "authentication:dashboard"
+LOGOUT_REDIRECT_URL = "dashboard"
 
 WSGI_APPLICATION = 'uai_pharma.wsgi.application'
 
@@ -102,7 +102,7 @@ WSGI_APPLICATION = 'uai_pharma.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR/'db.sqlite3'
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3')
 
     }
 }
@@ -179,3 +179,11 @@ MEDIA_URL = '/media/'
 # Path where media is stored
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
+DEFAULT_FROM_EMAIL = os.environ.get("EMAIL")
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = os.environ.get("EMAIL")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_PASSWORD")
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
