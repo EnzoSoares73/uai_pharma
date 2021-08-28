@@ -7,6 +7,7 @@ class EnderecosInLine(admin.StackedInline):
 
 class UserAdmin(admin.ModelAdmin):
     list_display = ('nome', 'email', 'is_staff', 'is_active')
+    list_display_links = ('nome', 'email')
     list_filter = ['is_staff', 'is_active']
 
     fieldsets = (

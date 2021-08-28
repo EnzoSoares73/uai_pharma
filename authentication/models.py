@@ -24,7 +24,7 @@ class regexAlfabetico(validators.RegexValidator):
     flags = 0
 
 class User(AbstractUser):
-    first_name = models.CharField('Primeiro nome', max_length=150) #mask
+    first_name = models.CharField('Primeiro nome', validators=[UnicodeUsernameValidator], max_length=150) #mask
     last_name = models.CharField('Sobrenome', max_length=150, validators=[UnicodeUsernameValidator]) #mask
     username = 0 #mask
     email = models.EmailField(('Email'), blank=True, unique=True)
@@ -43,5 +43,5 @@ class Endereco(models.Model):
     rua = models.CharField('Rua', validators=[regexAlfabetico], max_length=50)
     bairro = models.CharField('Bairro', validators=[regexAlfabetico], max_length=50)
     numero = models.IntegerField('Número')
-    complemento = models.CharField('Complemento', max_length=50)
+    complemento = models.CharField('Complemento', validators=[regexAlfabetico], max_length=50)
     user = models.ForeignKey(User, on_delete=models.CASCADE)

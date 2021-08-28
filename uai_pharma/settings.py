@@ -14,6 +14,7 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 import django as django
+from django.contrib import staticfiles
 from pip._internal.utils import logging
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -75,8 +76,7 @@ ROOT_URLCONF = 'uai_pharma.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -88,6 +88,10 @@ TEMPLATES = [
         },
     },
 ]
+
+LOGIN_REDIRECT_URL = "authentication:dashboard"
+
+LOGOUT_REDIRECT_URL = "authentication:dashboard"
 
 WSGI_APPLICATION = 'uai_pharma.wsgi.application'
 
@@ -155,7 +159,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = 'staticfiles'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'media'),

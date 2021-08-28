@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-def home(request):
+def dashboard(request):
     context = {
     }
-    return render(request, "authentication/home.html", context)
+    return render(request, "authentication/dashboard.html", context)

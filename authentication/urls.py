@@ -3,6 +3,6 @@ from . import views
 
 app_name = "authentication"
 urlpatterns = [
-    path("accounts", include("django.contrib.auth.urls")),
-    path('', views.home, name='home'),
+    path("accounts/", include("django.contrib.auth.urls")),
+    path("dashboard/", views.dashboard, name='dashboard'),
 ]
