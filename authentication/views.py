@@ -28,11 +28,8 @@ def register(request):
             user = form.save()
             login(request, user)
             return redirect(reverse("dashboard"))
-        else:
-            logger = logging.getLogger(__name__)
-            logger.error(form.errors)
-            context = {
-                "form": UserForm,
-                "errors": form.errors
-            }
-            return render(request, "authentication/register.html", context)
+        context = {
+            "form": UserForm,
+            "errors": form.errors
+        }
+        return render(request, "authentication/register.html", context)
