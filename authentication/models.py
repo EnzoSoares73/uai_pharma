@@ -27,7 +27,7 @@ class User(AbstractUser):
     validador_telefone = regexTelefone()
     validador_nome = UnicodeUsernameValidator()
     first_name = models.CharField('Primeiro nome', validators=[validador_nome], max_length=150) #mask
-    last_name = models.CharField('Sobrenome', max_length=150, validators=[]) #mask
+    last_name = models.CharField('Sobrenome', max_length=150, validators=[validador_nome]) #mask
     username = None #mask
     email = models.EmailField(('Email'), blank=True, unique=True)
     telefone = models.CharField('Número de Telefone', validators=[validador_telefone], max_length=10)
