@@ -3,7 +3,7 @@ from django.core import validators
 from django.db import models
 
 class UnicodeUsernameValidator(validators.RegexValidator):
-    regex = r"/^[a-z ,.'-]+$/i"
+    regex = r"^[^±!@£$%^&*0-9_+§¡€#¢§¶•ªº«\\/<>?:;|=.,]{1,20}$"
     message = (
         'Insira um nome válido.'
     )
@@ -24,11 +24,13 @@ class regexAlfabetico(validators.RegexValidator):
     flags = 0
 
 class User(AbstractUser):
-    first_name = models.CharField('Primeiro nome', validators=[UnicodeUsernameValidator], max_length=150) #mask
-    last_name = models.CharField('Sobrenome', max_length=150, validators=[UnicodeUsernameValidator]) #mask
+    validador_telefone = regexTelefone()
+    validador_nome = UnicodeUsernameValidator()
+    first_name = models.CharField('Primeiro nome', validators=[validador_nome], max_length=150) #mask
+    last_name = models.CharField('Sobrenome', max_length=150, validators=[]) #mask
     username = None #mask
     email = models.EmailField(('Email'), blank=True, unique=True)
-    telefone = models.CharField('Número de Telefone', validators=[regexTelefone], max_length=10)
+    telefone = models.CharField('Número de Telefone', validators=[validador_telefone], max_length=10)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -40,8 +42,9 @@ class User(AbstractUser):
         return self.get_full_name()
 
 class Endereco(models.Model):
-    rua = models.CharField('Rua', validators=[regexAlfabetico], max_length=50)
-    bairro = models.CharField('Bairro', validators=[regexAlfabetico], max_length=50)
+    validador_alfabetico = regexAlfabetico()
+    rua = models.CharField('Rua', validators=[validador_alfabetico], max_length=50)
+    bairro = models.CharField('Bairro', validators=[validador_alfabetico], max_length=50)
     numero = models.IntegerField('Número')
-    complemento = models.CharField('Complemento', validators=[regexAlfabetico], max_length=50)
+    complemento = models.CharField('Complemento', validators=[validador_alfabetico], max_length=50)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
